@@ -11,50 +11,8 @@ import java.util.Scanner;
 
 public class LoginSystem {
 
-	// Método principal de ejecución del programa
-	public void menu() {
-
-		Scanner teclado = new Scanner(System.in);
-		boolean entradaValida = false;
-		int opcion = 0;
-
-		// Control de errores: el usuario debe introducir un número válido
-		while (!entradaValida) {
-			try {
-				System.out.println("Elige una opción!");
-				System.out.println("0: Registrar un nuevo usuario\n1: Iniciar sesión");
-				opcion = Integer.parseInt(teclado.nextLine());
-				entradaValida = true;
-			} catch (NumberFormatException e) {
-				System.out.println("Error: debes introducir un número válido (0 o 1).");
-			}
-		}
-
-		// Condicional si el usuario se quiere registrar
-		if (opcion == 0) {
-			System.out.println("Has elegido registrar");
-			Usuario nuevoUsuario = registrarUsuario(teclado);
-			System.out.println(nuevoUsuario.toString());
-			guardarUsuarioTxt(nuevoUsuario);
-
-			// Condicional si el usuario quiere iniciar sesión
-		} else if (opcion == 1) {
-			System.out.println("Has elegido iniciar sesión");
-			if (verificarUsuario(teclado)) {
-				System.out.println("Inicio de sesión exitoso.");
-			} else {
-				System.out.println("No se ha podido iniciar sesión.");
-			}
-
-		} else {
-			System.out.println("Esa opción no es válida.");
-		}
-
-		teclado.close();
-	}
-
 	// Método para crear un objeto de tipo Usuario con la contraseña hasheada
-	public Usuario registrarUsuario(Scanner teclado) {
+	public Usuario registrarUsuario(String Usuario, String contrasenya) {
 		boolean entradaValida = false;
 		while (!entradaValida) {
 			System.out.println("Escriba un nombre de usuario: ");
@@ -86,7 +44,7 @@ public class LoginSystem {
 	}
 
 	// Método para verificar inicio de sesión
-	public boolean verificarUsuario(Scanner teclado) {
+	public boolean verificarUsuario(String Usuario, String contrasenya) {
 		System.out.println("Introduce tu nombre de usuario:");
 		String nombre = teclado.nextLine();
 
