@@ -48,9 +48,8 @@ public class ConexionServidor {
 				String respuestaCliente = entrada.readLine();
 				System.out.println(respuestaCliente);
 				
-				String lineaRespuesta = respuestaCliente;
+				String [] parteRespuesta = respuestaCliente.split(";");
 				
-				String [] parteRespuesta = lineaRespuesta.split(";");
 				String nombreUsuarioCliente = parteRespuesta[0];
 				String contraseñaCliente = parteRespuesta[1];
 				
@@ -60,17 +59,20 @@ public class ConexionServidor {
 				if (u != null) {
                     ls.guardarUsuarioTxt(u);
                     salida.println("Usuario registrado.");
+                    enviando = false;
+                    salida.flush();
                 } else {
                     salida.println("ERROR: Usuario ya existe.");
+                    salida.flush();
                 }
-                salida.flush();
+                
                 
 			}
 		}
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.err.println("IOException: " + e.getMessage());
-		}finally {}
+		}
 		
 	}
 

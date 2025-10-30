@@ -10,7 +10,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class ConexionCliente{
+public class ConexionCliente {
 	public void iniciarCliente() {
 		Socket conexionCliente = null;
 		BufferedReader entrada = null;
@@ -21,6 +21,7 @@ public class ConexionCliente{
 			entrada = new BufferedReader(new InputStreamReader(conexionCliente.getInputStream()));
 			salida = new PrintWriter(new BufferedWriter(new OutputStreamWriter(conexionCliente.getOutputStream())));		
 			
+			while (true) {
 			boolean enviando = true; 
 			
 			Scanner sc = new Scanner(System.in);
@@ -42,6 +43,7 @@ public class ConexionCliente{
 
 				
 			}	
+			
 			// Condicional si el usuario se quiere registrar
 			if (opcion == 0) {
 				System.out.println("Has elegido registrar");
@@ -75,29 +77,17 @@ public class ConexionCliente{
 			}
 			
 			String respuesta = entrada.readLine();
-            if (respuesta == null) {
-                System.out.println("El servidor ha cerrado la conexión.");
-                return;
-            }
             System.out.println(respuesta);
-			
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.err.println("No se ha podido conectar");
 			System.exit(-1);
-		}finally {
-			salida.close();
-			try {
-				entrada.close();
-				conexionCliente.close();
-			} catch (IOException e2) {
-				// TODO: handle exception
-				e2.printStackTrace();
-				System.exit(-1);
-			}
 		}
 		
-	}
+		
+		}
+	
 	
 	
 }
