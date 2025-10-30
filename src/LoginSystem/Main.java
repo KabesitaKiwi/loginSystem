@@ -1,11 +1,16 @@
 package LoginSystem;
 
+import java.io.IOException;
+
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args){
 		// Creamos el objeto de la clase LoginSystem
-		LoginSystem ls = new LoginSystem();
-		ls.menu();
+		
+		ConexionCliente cliente = new ConexionCliente();
+		cliente.iniciarCliente();
+		
+		
 	}
 
 }

@@ -12,21 +12,17 @@ import java.util.Scanner;
 public class LoginSystem {
 
 	// Método para crear un objeto de tipo Usuario con la contraseña hasheada
-	public Usuario registrarUsuario(String Usuario, String contrasenya) {
-		boolean entradaValida = false;
-		while (!entradaValida) {
-			System.out.println("Escriba un nombre de usuario: ");
-			String user = teclado.nextLine();
+	public Usuario registrarUsuario(String usuario, String contrasenya) {
+			String user = usuario;
 			if (!comprobarUsuario(user)) {
-				System.out.println("Escriba una contraseña: ");
-				String pass = teclado.nextLine();
+				String pass = contrasenya;
 
 				String passHash = calcularHash(pass);
 				return new Usuario(user, passHash);
 			} else {
 				System.out.println("El usuario ya existe, por favor intentelo con otro.");
 			}
-		}
+		
 		
 		return null;
 
@@ -44,12 +40,10 @@ public class LoginSystem {
 	}
 
 	// Método para verificar inicio de sesión
-	public boolean verificarUsuario(String Usuario, String contrasenya) {
-		System.out.println("Introduce tu nombre de usuario:");
-		String nombre = teclado.nextLine();
+	public boolean verificarUsuario(String usuario, String pass) {
+		String nombre = usuario ;
 
-		System.out.println("Introduce tu contraseña:");
-		String contrasenya = teclado.nextLine();
+		String contrasenya = pass;
 
 		String hashIntroducido = calcularHash(contrasenya);
 

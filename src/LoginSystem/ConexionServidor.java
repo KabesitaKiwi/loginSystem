@@ -30,42 +30,48 @@ public class ConexionServidor {
 		
 		System.out.println("escuchando: "+ servidor);
 		try {
+			while(true) {
 			conexion = servidor.accept();
+
 			System.out.println("Conexion aceptada: " +  conexion);
-			
 			entrada = new BufferedReader(new InputStreamReader(conexion.getInputStream()));
 			
 			salida = new PrintWriter(new BufferedWriter(new OutputStreamWriter(conexion.getOutputStream())));
 			
-			Scanner sc = new Scanner (System.in);
 			
 			System.out.println("Estas conectado como servidor");
 			
 			boolean enviando = true; 
 			
 			while(enviando) {
+				
 				String respuestaCliente = entrada.readLine();
-				System.out.println("cliente:" + respuestaCliente);
-				System.out.println("tu para cliente: ");
-				String mensajeServidor = sc.nextLine();
-				salida.println(mensajeServidor);
-				salida.flush();
-				enviando = !mensajeServidor.equals("BYE");
-				enviando = !entrada.readLine().equals("BYE");
+				System.out.println(respuestaCliente);
 				
+				String lineaRespuesta = respuestaCliente;
 				
+				String [] parteRespuesta = lineaRespuesta.split(";");
+				String nombreUsuarioCliente = parteRespuesta[0];
+				String contraseñaCliente = parteRespuesta[1];
+				
+				LoginSystem ls = new LoginSystem();
+				
+				Usuario u = ls.registrarUsuario(nombreUsuarioCliente, contraseñaCliente);
+				if (u != null) {
+                    ls.guardarUsuarioTxt(u);
+                    salida.println("Usuario registrado.");
+                } else {
+                    salida.println("ERROR: Usuario ya existe.");
+                }
+                salida.flush();
+                
 			}
-			
+		}
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.err.println("IOException: " + e.getMessage());
-		}finally {
-			salida.close();
-			entrada.close();
-			conexion.close();
-			servidor.close();
-			
-		}
+		}finally {}
 		
 	}
+
 }

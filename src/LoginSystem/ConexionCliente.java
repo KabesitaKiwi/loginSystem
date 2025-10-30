@@ -11,7 +11,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class ConexionCliente{
-	public static void main(String[] args) {
+	public void iniciarCliente() {
 		Socket conexionCliente = null;
 		BufferedReader entrada = null;
 		PrintWriter salida = null;
@@ -37,30 +37,49 @@ public class ConexionCliente{
 				} catch (NumberFormatException e) {
 					System.out.println("Debes introducir un numero, 1 o 2");
 				}
-			
+				
+				
+
+				
 			}	
-			
 			// Condicional si el usuario se quiere registrar
 			if (opcion == 0) {
 				System.out.println("Has elegido registrar");
-				salida.println("Registro: " + user + ":" + pass );
-				salida.flush();
+				boolean correcto = false;
+				while(!correcto) {
+				System.out.println("Dime el nombre de usuario: ");
+				String user = sc.nextLine();
+				System.out.println("Dime la contraseña  del usuario: ");
+				String pass = sc.nextLine();
+				if(!user.isEmpty()&&!pass.isEmpty() && !user.contains(";") && !pass.contains(";") ) {
+					salida.println(user + ";" + pass );
+					salida.flush();
+					correcto=true;
+				}else {
+				    System.out.println("El usuario y la contraseña no pueden estar vacíos ni contener ':'");
+				}
 
+				}
+				
 				// Condicional si el usuario quiere iniciar sesión
 			} else if (opcion == 1) {
 				System.out.println("Has elegido iniciar sesión");
-				if (verificarUsuario(sc)) {
-					System.out.println("Inicio de sesión exitoso.");
-				} else {
-					System.out.println("No se ha podido iniciar sesión.");
-				}
-
+				System.out.println("Nombre de usuario");
+				String user = sc.nextLine();
+				System.out.println("Contraseña");
+				String pass = sc.nextLine();
+				salida.println(user + ";" + pass );
+				salida.flush();
 			} else {
 				System.out.println("Esa opción no es válida.");
 			}
-
-			sc.close();
 			
+			String respuesta = entrada.readLine();
+            if (respuesta == null) {
+                System.out.println("El servidor ha cerrado la conexión.");
+                return;
+            }
+            System.out.println(respuesta);
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
